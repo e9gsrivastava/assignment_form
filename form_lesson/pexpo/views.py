@@ -213,7 +213,7 @@ class TaskView(FormView):
         context = super().get_context_data(**kwargs)
         context["form_type"] = "Task"
         context["add"] = True
-        context["url_name"] = "project"
+        context["url_name"] = "add_project"
         return context
 
 
@@ -256,7 +256,7 @@ class PostView(FormView):
         context = super().get_context_data(**kwargs)
         context["form_type"] = "Post"
         context["add"] = True
-        context["url_name"] = "category"
+        context["url_name"] = "add_post_category"
         return context
 
 
