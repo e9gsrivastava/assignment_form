@@ -2,7 +2,22 @@
 forms.py
 """
 from django import forms
-from .models import Book, Car, Song, Movie, JobPosting, Product, Task, Post, Enrollment
+from .models import (
+    Book,
+    Car,
+    Song,
+    Movie,
+    JobPosting,
+    Product,
+    Task,
+    Post,
+    Enrollment,
+    PostCategory,
+    Category,
+    Project,
+    Student,
+    Course,
+)
 
 
 class BookForm(forms.ModelForm):
@@ -143,6 +158,25 @@ class ProductForm(forms.ModelForm):
         }
 
 
+
+class CategoryForm(forms.ModelForm):
+    """
+    Form for adding a Category.
+    """
+
+    class Meta:
+        model = Category
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter category name",
+                }
+            ),
+        }
+
+
 class TaskForm(forms.ModelForm):
     """
     Form for adding a task.
@@ -159,6 +193,24 @@ class TaskForm(forms.ModelForm):
                 attrs={"class": "form-control", "placeholder": "Enter description"}
             ),
             "project": forms.Select(attrs={"class": "form-control"}),
+        }
+
+
+class ProjectForm(forms.ModelForm):
+    """
+    Form for adding a Project.
+    """
+
+    class Meta:
+        model = Project
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter Project name",
+                }
+            ),
         }
 
 
@@ -181,6 +233,24 @@ class PostForm(forms.ModelForm):
         }
 
 
+class PostCategoryForm(forms.ModelForm):
+    """
+    Form for adding a PostCategory.
+    """
+
+    class Meta:
+        model = PostCategory
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter post name",
+                }
+            ),
+        }
+
+
 class EnrollmentForm(forms.ModelForm):
     """
     Form for enrollment.
@@ -194,5 +264,41 @@ class EnrollmentForm(forms.ModelForm):
             "course": forms.Select(attrs={"class": "form-control"}),
             "grade": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "Enter category"}
+            ),
+        }
+
+
+class CourseForm(forms.ModelForm):
+    """
+    Form for adding a Course.
+    """
+
+    class Meta:
+        model = Course
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter post name",
+                }
+            ),
+        }
+
+
+class StudentForm(forms.ModelForm):
+    """
+    Form for adding a Student.
+    """
+
+    class Meta:
+        model = Student
+        fields = ["name"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter post name",
+                }
             ),
         }

@@ -1,7 +1,9 @@
 """
 views.py
 """
+from django.urls import reverse
 from django.views.generic.edit import FormView
+from django.views.generic import ListView
 from django.http import HttpResponse
 from .forms import (
     BookForm,
@@ -13,7 +15,38 @@ from .forms import (
     TaskForm,
     PostForm,
     EnrollmentForm,
+    CategoryForm,
+    ProjectForm,
+    PostCategoryForm,
+    CourseForm,
+    StudentForm,
 )
+
+
+class Home(ListView):
+    """
+    to navigate to all the urls from one screen
+    """
+
+    template_name = "home.html"
+    context_object_name = "urls"
+
+    def get_queryset(self):
+        """
+        to add query set
+        """
+        urls = [
+            {"url": reverse("add_book"), "name": "Book List"},
+            {"url": reverse("add_car"), "name": "Add Car"},
+            {"url": reverse("add_song"), "name": "Add Song"},
+            {"url": reverse("add_movie"), "name": "Add Movie"},
+            {"url": reverse("add_job"), "name": "Add Job"},
+            {"url": reverse("add_product"), "name": "Add Product"},
+            {"url": reverse("add_task"), "name": "Add Task"},
+            {"url": reverse("add_post"), "name": "Add Post"},
+            {"url": reverse("enroll"), "name": "Enroll"},
+        ]
+        return urls
 
 
 class AddBookView(FormView):
@@ -133,7 +166,33 @@ class ProductView(FormView):
         """Get context data for rendering the form."""
         context = super().get_context_data(**kwargs)
         context["form_type"] = "Product"
+        context["add"] = True
+        context["url_name"] = "add_category"
         return context
+
+
+class CategoryView(FormView):
+    """
+    View for adding a task using CategoryForm.
+    """
+
+    template_name = "sub_type.html"
+    form_class = CategoryForm
+
+    def form_valid(self, form):
+        """Handle form submission for adding a product."""
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """Get context data for rendering the form."""
+        context = super().get_context_data(**kwargs)
+        context["form_type"] = "Category"
+        return context
+
+    def get_success_url(self):
+        """To return to desired url"""
+        return reverse("add_product")
 
 
 class TaskView(FormView):
@@ -153,7 +212,30 @@ class TaskView(FormView):
         """Get context data for rendering the form."""
         context = super().get_context_data(**kwargs)
         context["form_type"] = "Task"
+        context["add"] = True
+        context["url_name"] = "project"
         return context
+
+
+class ProjectView(FormView):
+    """
+    View for adding a task using ProjectForm.
+    """
+
+    template_name = "sub_type.html"
+    form_class = ProjectForm
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_type"] = "Project"
+        return context
+
+    def get_success_url(self):
+        return reverse("add_task")
 
 
 class PostView(FormView):
@@ -173,7 +255,33 @@ class PostView(FormView):
         """Get context data for rendering the form."""
         context = super().get_context_data(**kwargs)
         context["form_type"] = "Post"
+        context["add"] = True
+        context["url_name"] = "category"
         return context
+
+
+class PostCategoryView(FormView):
+    """
+    View for adding a task using PostCategoryForm.
+    """
+
+    template_name = "sub_type.html"
+    form_class = PostCategoryForm
+
+    def form_valid(self, form):
+        """Handle form submission for adding a post."""
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """Get context data for rendering the form."""
+        context = super().get_context_data(**kwargs)
+        context["form_type"] = "PostCategory"
+        return context
+
+    def get_success_url(self):
+        """To return to desired url"""
+        return reverse("add_post")
 
 
 class EnrollmentView(FormView):
@@ -193,4 +301,56 @@ class EnrollmentView(FormView):
         """Get context data for rendering the form."""
         context = super().get_context_data(**kwargs)
         context["form_type"] = "Enroll"
+        context["add"] = True
+        context["add_more"] = True
+        context["url_name"] = "course"
+        context["url_name_more"] = "student"
         return context
+
+
+class CourseView(FormView):
+    """
+    View for adding a task using CourseForm.
+    """
+
+    template_name = "sub_type.html"
+    form_class = CourseForm
+
+    def form_valid(self, form):
+        """Handle form submission for adding a product."""
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """Get context data for rendering the form."""
+        context = super().get_context_data(**kwargs)
+        context["form_type"] = "Course"
+        return context
+
+    def get_success_url(self):
+        """To return to desired url"""
+        return reverse("enroll")
+
+
+class StudentView(FormView):
+    """
+    View for adding a task using StudentForm.
+    """
+
+    template_name = "sub_type.html"
+    form_class = StudentForm
+
+    def form_valid(self, form):
+        """Handle form submission for adding a product."""
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """Get context data for rendering the form."""
+        context = super().get_context_data(**kwargs)
+        context["form_type"] = "Student"
+        return context
+
+    def get_success_url(self):
+        """To return to desired url"""
+        return reverse("enroll")
