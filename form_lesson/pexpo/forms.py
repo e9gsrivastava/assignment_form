@@ -158,7 +158,6 @@ class ProductForm(forms.ModelForm):
         }
 
 
-
 class CategoryForm(forms.ModelForm):
     """
     Form for adding a Category.
