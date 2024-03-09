@@ -104,10 +104,21 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     """
     serializing data for enrollment model
     """
+    student_detail=serializers.SerializerMethodField()
+    course_detail=serializers.SerializerMethodField()
+    url=serializers.HyperlinkedIdentityField(view_name='enroll')
+
 
     class Meta:
         model = Enrollment
         fields = "__all__"
+
+    def get_student_detail(self,object):
+        return StudentSerializer(object.student).data
+
+    def get_course_detail(self,object):
+        return StudentSerializer(object.course).data
+
 
 
 class PostCategorySerializer(serializers.ModelSerializer):

@@ -279,7 +279,7 @@ class CourseForm(forms.ModelForm):
             "name": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter post name",
+                    "placeholder": "Enter course name",
                 }
             ),
         }
@@ -297,7 +297,7 @@ class StudentForm(forms.ModelForm):
             "name": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter post name",
+                    "placeholder": "Enter student name",
                 }
             ),
         }
